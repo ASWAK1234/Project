@@ -1,0 +1,35 @@
+import numpy as np
+
+# Define the supply and demand arrays
+supply = np.array([300, 400, 500])
+demand = np.array([250, 350, 300, 200])
+
+# Define the cost matrix
+cost_matrix = np.array([
+    [10, 12, 15, 18],
+    [11, 13, 16, 19],
+    [12, 14, 17, 20]
+])
+
+# Initialize the transportation matrix
+transportation_matrix = np.zeros((len(supply), len(demand)))
+
+# Northwest Corner method
+i, j = 0, 0
+while i < len(supply) and j < len(demand):
+    allocation = min(supply[i], demand[j])
+    transportation_matrix[i, j] = allocation
+    supply[i] -= allocation
+    demand[j] -= allocation
+    if supply[i] == 0:
+        i += 1
+    else:
+        j += 1
+
+# Print the transportation matrix
+print("Transportation Matrix:")
+print(transportation_matrix)
+
+# Calculate the total cost
+total_cost = np.sum(transportation_matrix * cost_matrix)
+print(f"Total Cost: {total_cost}")
